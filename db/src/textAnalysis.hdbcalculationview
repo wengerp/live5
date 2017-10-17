@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="live5.db::textAnalysis" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" defaultClient="$$client$$" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="textAnalysis"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="$TA_live5.db::TATweets">
+    <resourceUri>$TA_live5.db::TATweets</resourceUri>
+  </DataSource>
+  <DataSource id="Aggregation_2$$$$$TA_live5.db::TATweets$$">
+    <resourceUri>$TA_live5.db::TATweets</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="TA_TOKEN">
+        <descriptions defaultDescription="TA_TOKEN"/>
+      </viewAttribute>
+      <viewAttribute id="TA_TYPE">
+        <descriptions defaultDescription="TA_TYPE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="count" datatype="INTEGER" expressionLanguage="SQL">
+        <formula>1</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="$TA_live5.db::TATweets">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TOKEN" source="TA_TOKEN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TYPE" source="TA_TYPE"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="TA_TOKEN">
+        <descriptions defaultDescription="TA_TOKEN"/>
+      </viewAttribute>
+      <viewAttribute id="TA_TYPE">
+        <descriptions defaultDescription="TA_TYPE"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_2$$$$$TA_live5.db::TATweets$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TOKEN" source="TA_TOKEN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TYPE" source="TA_TYPE"/>
+    </input>
+    <filter>&quot;TA_TYPE&quot;='UNAMBIGUOUS_PROFANITY'</filter>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" joinType="leftOuter">
+    <viewAttributes>
+      <viewAttribute id="TA_TOKEN">
+        <descriptions defaultDescription="TA_TOKEN"/>
+      </viewAttribute>
+      <viewAttribute id="TA_TYPE">
+        <descriptions defaultDescription="TA_TYPE"/>
+      </viewAttribute>
+      <viewAttribute id="count" aggregationType="sum">
+        <descriptions defaultDescription="count"/>
+      </viewAttribute>
+      <viewAttribute id="TA_TOKEN_1">
+        <descriptions defaultDescription="TA_TOKEN_1"/>
+      </viewAttribute>
+      <viewAttribute id="TA_TYPE_1">
+        <descriptions defaultDescription="TA_TYPE_1"/>
+      </viewAttribute>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="type" datatype="NVARCHAR" length="100" expressionLanguage="SQL">
+        <formula>&quot;TA_TYPE&quot;</formula>
+      </calculatedViewAttribute>
+      <calculatedViewAttribute id="token" datatype="NVARCHAR" length="5000" expressionLanguage="COLUMN_ENGINE">
+        <formula>if(isnull(&quot;TA_TOKEN_1&quot;), &quot;TA_TOKEN&quot;, '*****')</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <restrictedViewAttributes/>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TOKEN" source="TA_TOKEN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TYPE" source="TA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="count" source="count"/>
+    </input>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TOKEN_1" source="TA_TOKEN"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TYPE_1" source="TA_TYPE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TA_TOKEN" source="TA_TOKEN"/>
+    </input>
+    <joinAttribute name="TA_TOKEN"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="type" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="type"/>
+      <keyMapping columnObjectName="Join_1" columnName="type"/>
+    </attribute>
+    <attribute id="token" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="token"/>
+      <keyMapping columnObjectName="Join_1" columnName="token"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="count" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="count"/>
+      <measureMapping columnObjectName="Join_1" columnName="count"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="100" y="105"/>
+    
+      <rectangleSize width="140"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="394"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="286" y="394"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="188" y="238"/>
+      <rectangleSize height="30" width="140"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

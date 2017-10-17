@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Opa tests for Live5</title>
+		<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+		<meta charset="UTF-8">
+
+		<script id="sap-ui-bootstrap"
+				src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+				data-sap-ui-resourceroots='{
+					"live5.ui.test.integration": "./",
+					"live5.ui.app" : "../mockServer"
+				}'>
+		</script>
+
+		<script>
+			jQuery.sap.require("live5.ui.test.integration.AllJourneys");
+		</script>
+
+	</head>
+	<body>
+		<div id="qunit"></div>
+		<div id="qunit-fixture"></div>
+	</body>
+</html>
