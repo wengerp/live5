@@ -1,12 +1,9 @@
 ID: live5
-_schema-version: '2.0'
-version: 0.0.1
+_schema-version: '2.0.0'
+version: 1.0.0
 
 modules:
  
-
-
-
  - name: db
    type: hdb
    path: db
